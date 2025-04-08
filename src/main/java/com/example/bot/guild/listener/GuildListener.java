@@ -5,6 +5,7 @@ import com.example.bot.guild.service.implementation.GuildServiceImpl;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.thread.member.ThreadMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -12,11 +13,11 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Member;
 import java.util.Map;
 
 @Component
 public class GuildListener extends ListenerAdapter {
-
 
     private final GuildServiceImpl guildService;
 
@@ -37,15 +38,14 @@ public class GuildListener extends ListenerAdapter {
     }
 
     @Override
-    public void onThreadMemberJoin(@NotNull ThreadMemberJoinEvent event) {
-        System.out.println("hola thread");
-        super.onThreadMemberJoin(event);
-    }
-
-    @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
         System.out.println("hola");
         guildService.onMemberJoin(event);
+    }
+
+    @Override
+    public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {
+        guildService.onMemberExit(event);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class GuildListener extends ListenerAdapter {
 
     @Override
     public void onGuildLeave(@NotNull GuildLeaveEvent event) {
-
+        guildService.onExitGuild(event.getGuild());
     }
 
 

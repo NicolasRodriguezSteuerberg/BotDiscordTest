@@ -2,10 +2,7 @@ package com.example.bot.guild.persistance.entity;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Null;
 import lombok.*;
-
-import java.util.List;
 
 
 @NoArgsConstructor
@@ -25,5 +22,5 @@ public class GuildEntity {
     @Column(name = "welcome_chat")
     private String welcomeChat;
     @Column(name = "bye_chat")
-    private String byeChat;
+    private String goodByeChat;
 }

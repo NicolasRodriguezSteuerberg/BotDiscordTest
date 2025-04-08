@@ -29,7 +29,7 @@ public class ScoreListener extends ListenerAdapter {
         User user = event.getAuthor();
         if (user.isBot() || user.isSystem()) return;
         Message msg =  event.getMessage();
-        System.out.println(msg);
+        System.out.println(msg.getContentRaw());
     }
 
     @Override

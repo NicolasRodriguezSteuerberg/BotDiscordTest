@@ -12,36 +12,37 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
-@CustomName(CommandConstants.SET_WELCOME_CHAT)
-public class WelcomeChat implements IGuildCommand {
+@CustomName(CommandConstants.SET_GOOD_BYE_CHAT)
+public class ByeChat implements IGuildCommand {
 
     @Autowired
     private GuildServiceImpl guildService;
     @Autowired
     private IGuildRepository guildRepository;
 
+
     @Override
     public void execute(SlashCommandInteractionEvent event) {
         Guild guild = event.getGuild();
-        OptionMapping option = event.getOption(CommandConstants.SET_WELCOME_CHAT.getOptions()[0].getName());
+        if (guild == null){
+            event.reply("Debes estar en una guild").queue();
+            return;
+        }
+        OptionMapping option = event.getOption(CommandConstants.SET_GOOD_BYE_CHAT.getOptions()[0].getName());
         if (option == null){
             event.reply("No se ha recibido la opcion necesaria").queue();
             return;
         }
         String txtChannelOption = option.getAsString();
+        TextChannel selectedTextChannel = guildService.getOrCreateTextChannel(guild, txtChannelOption);
 
-        TextChannel txtChannel = guildService.getOrCreateTextChannel(guild, txtChannelOption);
-        int updated = guildRepository.updateWelcomeChat(txtChannel.getId(), guild.getId());
-        String message;
-        System.out.println(updated);
-        if (updated > 0){
-            message = "Se ha cambiado exitosamente el chat de bienvenidas";
+        int updated = guildRepository.updateGoodByeChannel(selectedTextChannel.getId(), guild.getId());
+        if (updated > 0) {
+            event.reply("Canal de texto de despedidas cambiado exitosamente").queue();
         } else {
-            message = "Hubo un error al cambiar el chat de bienvenidas";
+            event.reply("Error al cambiar el canal de texto de despedidas").queue();
         }
-        event.reply(message).queue();
+
     }
 }

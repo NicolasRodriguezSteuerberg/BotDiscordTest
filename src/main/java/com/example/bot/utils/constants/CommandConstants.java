@@ -15,6 +15,14 @@ public enum CommandConstants {
                     new Option("chat", "Nombre del chat (puede ser uno nuevo)", OptionType.STRING, true, true)
             }
     ),
+    SET_GOOD_BYE_CHAT(
+            "set_goodbye_chat",
+            "Agrega un canal de texto como chat de despedidas",
+            DefaultMemberPermissions.DISABLED,
+            new Option[]{
+                    new Option("chat", "Nombre del chat (puede ser uno nuevo)", OptionType.STRING, true, true)
+            }
+    ),
 
     // SCORE
     TIER_LIST("tier_list", "Top de los 5 mejores (tanto de chat como de voz)", DefaultMemberPermissions.ENABLED, null),

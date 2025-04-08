@@ -14,4 +14,9 @@ public interface IGuildRepository extends JpaRepository<GuildEntity, String> {
     @Transactional
     @Query("UPDATE GuildEntity guild SET guild.welcomeChat = :new_value where guild.id = :cond_value")
     int updateWelcomeChat(@Param("new_value") String welcomeTextId, @Param("cond_value") String guildId);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE GuildEntity guild SET guild.goodByeChat = :new_value where guild.id = :cond_value")
+    int updateGoodByeChannel(@Param("new_value") String goodByeChat, @Param("cond_value") String guildId);
 }
