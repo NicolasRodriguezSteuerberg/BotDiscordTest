@@ -12,7 +12,7 @@ public enum CommandConstants {
             "Agrega un canal de texto como chat de bienvenidas",
             DefaultMemberPermissions.DISABLED,
             new Option[]{
-                    new Option("chat", "Nombre del chat (puede ser uno nuevo)", OptionType.STRING, true, true)
+                    new Option("chat", "Chat de texto", OptionType.CHANNEL, true, false)
             }
     ),
     SET_GOOD_BYE_CHAT(
@@ -20,7 +20,17 @@ public enum CommandConstants {
             "Agrega un canal de texto como chat de despedidas",
             DefaultMemberPermissions.DISABLED,
             new Option[]{
-                    new Option("chat", "Nombre del chat (puede ser uno nuevo)", OptionType.STRING, true, true)
+                    new Option("chat", "Chat de texto", OptionType.CHANNEL, true, false)
+            }
+    ),
+    SET_ROLE_REACTION(
+            "set_role_reaction",
+            "Agrega un mensaje en el que se tiene que reaccionar con un rol para añadirselo",
+            DefaultMemberPermissions.DISABLED,
+            new Option[] {
+                    new Option("role", "Nombre del rol que se agregara al usuario al poner el rol", OptionType.ROLE, true, false),
+                    new Option("emoji", "Emoji con el que hay que reaccionar", OptionType.STRING, true, false),
+                    new Option("chat", "Nombre del chat donde mandar el mensaje", OptionType.CHANNEL, false, false)
             }
     ),
 

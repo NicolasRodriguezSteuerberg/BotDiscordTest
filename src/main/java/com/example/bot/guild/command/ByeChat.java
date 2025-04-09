@@ -7,6 +7,7 @@ import com.example.bot.guild.service.implementation.GuildServiceImpl;
 import com.example.bot.utils.constants.CommandConstants;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.unions.GuildChannelUnion;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +35,17 @@ public class ByeChat implements IGuildCommand {
             event.reply("No se ha recibido la opcion necesaria").queue();
             return;
         }
-        String txtChannelOption = option.getAsString();
-        TextChannel selectedTextChannel = guildService.getOrCreateTextChannel(guild, txtChannelOption);
+        try {
+            TextChannel selectedTextChannel =  option.getAsChannel().asTextChannel();
 
-        int updated = guildRepository.updateGoodByeChannel(selectedTextChannel.getId(), guild.getId());
-        if (updated > 0) {
-            event.reply("Canal de texto de despedidas cambiado exitosamente").queue();
-        } else {
-            event.reply("Error al cambiar el canal de texto de despedidas").queue();
+            int updated = guildRepository.updateGoodByeChannel(selectedTextChannel.getId(), guild.getId());
+            if (updated > 0) {
+                event.reply("Canal de texto de despedidas cambiado exitosamente").queue();
+            } else {
+                event.reply("Error al cambiar el canal de texto de despedidas").queue();
+            }
+        } catch (IllegalStateException e) {
+            event.reply("Error, el canal seleccionado no es un canal de texto").queue();
         }
 
     }

@@ -15,12 +15,11 @@ import lombok.*;
 public class GuildEntity {
     @Id
     private String id;
-    @Column(name = "default_role")
-    private String defaultRole;
-    @Column(name = "info_chat")
-    private String infoChat;
     @Column(name = "welcome_chat")
     private String welcomeChat;
     @Column(name = "bye_chat")
     private String goodByeChat;
+    @Embedded
+    @Column(name = "role_info")
+    private GuildEntityRoleEmbeddable roleInfo;
 }

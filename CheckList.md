@@ -2,10 +2,12 @@
 ## Server Managment
 - [ ] Agregar/modificar el canal de texto (persona se ha unido(emogi para que pueda recibir un rol))
   - [ ] Rol a añadir
-- [ ] Agregar/modificar el canal de texto de bienvenidas
+- [x] Agregar/modificar el canal de texto de bienvenidas
   - [ ] Agregar/Ver/Borrar mensajes que se pueden enviar de bienvenida
-- [ ] Agregar/Modificar el canal de texto de despedidas
+  - [ ] Hacer mas bonito el mensaje de bienvenida
+- [x] Agregar/Modificar el canal de texto de despedidas
   - [ ] Agregar/Ver/Borrar mensajes que se pueden enviar de despedida
+  - [ ] Hacer mas bonito el mensaje de despedida
 - [ ] Que todo lo anterior solo lo puedan hacer/ver los moderadores
 
 

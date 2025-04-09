@@ -31,17 +31,16 @@ public class WelcomeChat implements IGuildCommand {
             event.reply("No se ha recibido la opcion necesaria").queue();
             return;
         }
-        String txtChannelOption = option.getAsString();
-
-        TextChannel txtChannel = guildService.getOrCreateTextChannel(guild, txtChannelOption);
-        int updated = guildRepository.updateWelcomeChat(txtChannel.getId(), guild.getId());
-        String message;
-        System.out.println(updated);
-        if (updated > 0){
-            message = "Se ha cambiado exitosamente el chat de bienvenidas";
-        } else {
-            message = "Hubo un error al cambiar el chat de bienvenidas";
+        try{
+            TextChannel selectedChannel = option.getAsChannel().asTextChannel();
+            int updated = guildRepository.updateWelcomeChat(selectedChannel.getId(), guild.getId());
+            if (updated > 0){
+                event.reply("Se ha cambiado exitosamente el chat de bienvenidas").queue();
+            } else {
+                event.reply("Hubo un error al cambiar el chat de bienvenidas").queue();
+            }
+        } catch (IllegalStateException e) {
+            event.reply("Error, el canal seleccionado no es un canal de texto").queue();
         }
-        event.reply(message).queue();
     }
 }
